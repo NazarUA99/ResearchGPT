@@ -1,0 +1,27 @@
+services:
+  wellingtechinc_db:
+    container_name: wellingtechinc_postgresql_db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    volumes:
+      - wellingtechinc_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=wellingtechinc
+      - POSTGRES_PASSWORD=wellingtechinc
+    expose:
+      - "5432"
+    ports:
+      - "5436:5432"
+    healthcheck:
+      test:
+        [
+            "CMD-SHELL", "pg_isready -U wellingtechinc"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  wellingtechinc_db: {}
+  
